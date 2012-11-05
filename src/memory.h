@@ -19,7 +19,7 @@ class Memory : public gb::Addressable
 public:
     
     Memory(size_t size) :
-        _mem(new gb::Byte[size]),
+        _mem(new gb::Word[size]),
         _size(size)
     {
     }
@@ -29,7 +29,7 @@ public:
         delete[] _mem;
     }
 
-    virtual gb::Byte& operator[](size_t address) override
+    virtual gb::Word& operator[](size_t address) override
     {
         assert(validAddress(address));
         return _mem[address];
@@ -48,7 +48,7 @@ public:
 
 protected:
 
-    gb::Byte* _mem;
+    gb::Word* _mem;
     size_t _size;
 
 };
