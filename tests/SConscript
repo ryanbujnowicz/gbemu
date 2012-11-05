@@ -1,7 +1,10 @@
 import os
 Import('env')
 
-prog = env.Program('tests', Glob("*.cpp"), LIBS=['gtest', 'gtest_main'], CXXFLAGS=['-DGTEST_USE_OWN_TR1_TUPLE=1'], CPPPATH=["#src"])
+prog = env.Program('tests', Glob("*.cpp"), LIBS=['gtest', 'gtest_main', 'gbemu'], 
+                                           LIBPATH=['#inst/lib'], 
+                                           CXXFLAGS=['-DGTEST_USE_OWN_TR1_TUPLE=1'], 
+                                           CPPPATH=["#inst/include"])
 
 env.Alias("install", env.Install(os.path.join(env['PREFIX'], "bin"), prog))
 

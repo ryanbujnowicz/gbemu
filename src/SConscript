@@ -1,7 +1,8 @@
 import os
 Import('env')
 
-prog = env.Program('gbemu', Glob("*.cpp"))
+prog = env.Library('gbemu', Glob("*.cpp"))
 
-env.Alias("install", env.Install(os.path.join(env['PREFIX'], "bin"), prog))
+env.Alias("install", env.Install(os.path.join(env['PREFIX'], "include"), Glob("*.h")))
+env.Alias("install", env.Install(os.path.join(env['PREFIX'], "lib"), prog))
 
