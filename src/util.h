@@ -3,37 +3,72 @@
 
 #include <cassert>
 #include <cstdlib>
+#include <ostream>
 #include <sstream>
 
 #include "units.h"
+//#include "printable.h"
 
 namespace gb {
 
-std::string toStr(gb::Word n)
+class Range
 {
-    char buf[5];
-    sprintf(buf, "0x%02X", n);
-    return buf;
-}
+public:
+    Range(size_t min, size_t max) :
+        _min(min),
+        _max(max)
+    {
+        assert(min <= max);
+    }
 
-std::string toStr(gb::Dword n)
-{
-    char buf[7];
-    sprintf(buf, "0x%04X", n);
-    return buf;
-}
+    bool contains(size_t val) const
+    {
+        return val >= _min && val <= _max;
+    }
+
+    size_t min() const
+    {
+        return _min;
+    }
+
+    size_t max() const
+    {
+        return _max;
+    }
+
+    //virtual std::string toStr() const override
+    std::string toStr() const
+    {
+        std::stringstream ss;
+        ss << "gb::Range(" << _min << "," << _max << ")";
+        return ss.str();
+    }
+
+    std::ostream& operator<<(std::ostream& out) const
+    {
+        out << toStr() << std::endl;
+        return out;
+    }
+
+private:
+    size_t _min;
+    size_t _max;
+};
+
+std::string toStr(gb::Word val);
+std::string toStr(gb::Dword val);
 
 template <typename T>
 T toHex(const std::string& s)
 {
     std::stringstream ss;
     ss << std::hex << s;
-    
-    size_t n;
-    ss >> n;
 
-    assert(n >= std::numeric_limits<T>::min() && n <= std::numeric_limits<T>::max());
-    return static_cast<T>(n);
+    int x;
+    ss >> x;
+
+    assert(x >= std::numeric_limits<T>::min() && x <= std::numeric_limits<T>::max());
+    return static_cast<T>(x);
 }
 
 }

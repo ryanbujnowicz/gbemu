@@ -32,3 +32,20 @@ TEST(UtilTest, ToHex)
     EXPECT_EQ(0xFFFF, gb::toHex<gb::Dword>("0xFFFF"));
 }
 
+TEST(UtilTest, RangeMinMax)
+{
+    EXPECT_EQ(5, gb::Range(5, 6).min());
+    EXPECT_EQ(6, gb::Range(5, 6).max());
+    EXPECT_EQ(1, gb::Range(1, 10).min());
+    EXPECT_EQ(16, gb::Range(14, 16).max());
+}
+
+
+TEST(UtilTest, RangeContains)
+{
+    EXPECT_TRUE(gb::Range(5, 6).contains(5));
+    EXPECT_TRUE(gb::Range(5, 6).contains(6));
+    EXPECT_FALSE(gb::Range(5, 6).contains(4));
+    EXPECT_FALSE(gb::Range(5, 6).contains(7));
+}
+

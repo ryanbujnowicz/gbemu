@@ -14,7 +14,7 @@ class Addressable
 {
 public:
     virtual gb::Word& operator[](size_t address) = 0;
-    virtual bool validAddress(size_t address) = 0;
+    virtual bool validAddress(size_t address) const = 0;
 };
 
 }

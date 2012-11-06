@@ -35,7 +35,7 @@ public:
         return _mem[address];
     }
 
-    virtual bool validAddress(size_t address) override
+    virtual bool validAddress(size_t address) const override
     {
         // Address will always be >= 0
         return address < _size;
