@@ -7,11 +7,11 @@
 #include <sstream>
 
 #include "units.h"
-//#include "printable.h"
+#include "printable.h"
 
 namespace gb {
 
-class Range
+class Range : public Printable
 {
 public:
     Range(size_t min, size_t max) :
@@ -37,7 +37,7 @@ public:
     }
 
     //virtual std::string toStr() const override
-    std::string toStr() const
+    virtual std::string toStr() const override
     {
         std::stringstream ss;
         ss << "gb::Range(" << _min << "," << _max << ")";
