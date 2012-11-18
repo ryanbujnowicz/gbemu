@@ -31,11 +31,11 @@ public:
 
     virtual gb::Word& operator[](size_t address) override
     {
-        assert(validAddress(address));
+        assert(isValidAddress(address));
         return _mem[address];
     }
 
-    virtual bool validAddress(size_t address) const override
+    virtual bool isValidAddress(size_t address) const override
     {
         // Address will always be >= 0
         return address < _size;

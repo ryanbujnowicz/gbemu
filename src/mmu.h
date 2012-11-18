@@ -20,7 +20,7 @@ public:
     MMU();
     ~MMU();
 
-    virtual bool validAddress(size_t address) const override;
+    virtual bool isValidAddress(size_t address) const override;
     virtual gb::Word& operator[](size_t address) override;
 
     /**

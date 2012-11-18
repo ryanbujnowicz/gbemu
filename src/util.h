@@ -71,6 +71,16 @@ T toHex(const std::string& s)
     return static_cast<T>(x);
 }
 
+/**
+ * Converts i to a 8bit twos-complement representation.
+ */
+// TODO: encode
+gb::Word toSigned8(int i);
+gb::Dword toSigned16(int i);
+
+int toInt8(gb::Word val);
+int toInt16(gb::Dword val);
+
 }
 
 #endif

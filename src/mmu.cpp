@@ -11,7 +11,7 @@ MMU::~MMU()
 {
 }
 
-bool MMU::validAddress(size_t address) const 
+bool MMU::isValidAddress(size_t address) const 
 {
     for (const MapEntry& e : _entries) {
         if (e.localRange.contains(address)) {

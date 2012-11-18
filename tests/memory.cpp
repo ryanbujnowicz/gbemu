@@ -32,10 +32,10 @@ TEST_F(MemoryTest, SetGet)
 
 TEST_F(MemoryTest, ValidAddress)
 {
-    EXPECT_TRUE(_mem.validAddress(0x00));
-    EXPECT_TRUE(_mem.validAddress(0x05));
-    EXPECT_TRUE(_mem.validAddress(0x0F));
-    EXPECT_FALSE(_mem.validAddress(0x10));
-    EXPECT_FALSE(_mem.validAddress(0xFF));
+    EXPECT_TRUE(_mem.isValidAddress(0x00));
+    EXPECT_TRUE(_mem.isValidAddress(0x05));
+    EXPECT_TRUE(_mem.isValidAddress(0x0F));
+    EXPECT_FALSE(_mem.isValidAddress(0x10));
+    EXPECT_FALSE(_mem.isValidAddress(0xFF));
 }
 

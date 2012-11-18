@@ -38,15 +38,15 @@ TEST_F(MMUTest, SetGet)
 
 TEST_F(MMUTest, ValidAddress)
 {
-    EXPECT_TRUE(_mmu.validAddress(0x00));
-    EXPECT_TRUE(_mmu.validAddress(0x0F));
-    EXPECT_TRUE(_mmu.validAddress(0x02));
-    EXPECT_TRUE(_mmu.validAddress(0x10));
-    EXPECT_TRUE(_mmu.validAddress(0x1F));
-    EXPECT_TRUE(_mmu.validAddress(0x100));
-    EXPECT_TRUE(_mmu.validAddress(0x10F));
-    EXPECT_FALSE(_mmu.validAddress(0x20));
-    EXPECT_FALSE(_mmu.validAddress(0xFF));
-    EXPECT_FALSE(_mmu.validAddress(0x110));
+    EXPECT_TRUE(_mmu.isValidAddress(0x00));
+    EXPECT_TRUE(_mmu.isValidAddress(0x0F));
+    EXPECT_TRUE(_mmu.isValidAddress(0x02));
+    EXPECT_TRUE(_mmu.isValidAddress(0x10));
+    EXPECT_TRUE(_mmu.isValidAddress(0x1F));
+    EXPECT_TRUE(_mmu.isValidAddress(0x100));
+    EXPECT_TRUE(_mmu.isValidAddress(0x10F));
+    EXPECT_FALSE(_mmu.isValidAddress(0x20));
+    EXPECT_FALSE(_mmu.isValidAddress(0xFF));
+    EXPECT_FALSE(_mmu.isValidAddress(0x110));
 }
 
