@@ -1,7 +1,7 @@
 import os
 Import('env')
 
-prog = env.Program('tests', Glob("*.cpp"), LIBS=['gtest', 'gtest_main', 'gbemu'], 
+prog = env.Program('tests', Glob("*.cpp"), LIBS=['gtest', 'gtest_main', 'cpu'], 
                                            LIBPATH=['#inst/lib'], 
                                            CXXFLAGS=['-DGTEST_USE_OWN_TR1_TUPLE=1'], 
                                            CPPPATH=["#inst/include"])

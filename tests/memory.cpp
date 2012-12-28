@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "memory.h"
-#include "units.h"
+#include "cpu/memory.h"
+#include "cpu/units.h"
 
 class MemoryTest : public testing::Test
 {

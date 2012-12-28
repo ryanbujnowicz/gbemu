@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 
-#include "mmu.h"
-#include "memory.h"
-#include "units.h"
+#include "cpu/mmu.h"
+#include "cpu/memory.h"
+#include "cpu/units.h"
 
 class MMUTest : public testing::Test
 {

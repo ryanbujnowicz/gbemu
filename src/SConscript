@@ -1,8 +1,1 @@
-import os
-Import('env')
-
-prog = env.Library('gbemu', Glob("*.cpp"))
-
-env.Alias("install", env.Install(os.path.join(env['PREFIX'], "include"), Glob("*.h")))
-env.Alias("install", env.Install(os.path.join(env['PREFIX'], "lib"), prog))
-
+SConscript(dirs=['lib', 'bin'])

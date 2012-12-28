@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
-#include "cpu.h"
-#include "memory.h"
-#include "units.h"
-#include "util.h"
+#include "cpu/cpu.h"
+#include "cpu/memory.h"
+#include "cpu/units.h"
+#include "cpu/util.h"
 
 #define EXPECT_FLAGS(z, n, h, c) \
     EXPECT_EQ(z, _cpu.flag(gb::Cpu::FlagZ)); \
