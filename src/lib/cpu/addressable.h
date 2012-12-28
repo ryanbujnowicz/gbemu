@@ -1,7 +1,7 @@
 #ifndef GB_ADDRESSABLE_H
 #define GB_ADDRESSABLE_H
 
-#include "units.h"
+#include "util/units.h"
 
 namespace gb {
 

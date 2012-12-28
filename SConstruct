@@ -8,5 +8,5 @@ env.Replace(CXX="clang++",
             LINKFLAGS=['-std=gnu++11', '-stdlib=libc++'])
 
 SConscript(dirs=['src'], variant_dir='#gen/src')
-SConscript('tests/SConscript', variant_dir='#gen/tests')
+SConscript(dirs=['tests'], variant_dir='#gen/tests')
 

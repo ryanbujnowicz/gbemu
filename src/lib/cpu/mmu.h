@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "addressable.h"
-#include "units.h"
-#include "util.h"
+#include "cpu/addressable.h"
+#include "util/units.h"
+#include "util/util.h"
 
 namespace gb {
 

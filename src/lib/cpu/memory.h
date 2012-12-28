@@ -6,7 +6,7 @@
 #include <string>
 
 #include "addressable.h"
-#include "units.h"
+#include "util/units.h"
 
 namespace gb {
 

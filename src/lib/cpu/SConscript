@@ -1,7 +1,7 @@
 import os
 Import('env')
 
-prog = env.Library('cpu', Glob("*.cpp"))
+prog = env.Library('cpu', Glob("*.cpp"), CPPPATH=["#inst/include"])
 
 env.Alias("install", env.Install(os.path.join(env['PREFIX'], "include", "cpu"), Glob("*.h")))
 env.Alias("install", env.Install(os.path.join(env['PREFIX'], "lib"), prog))

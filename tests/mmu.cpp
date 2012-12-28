@@ -2,7 +2,7 @@
 
 #include "cpu/mmu.h"
 #include "cpu/memory.h"
-#include "cpu/units.h"
+#include "util/units.h"
 
 class MMUTest : public testing::Test
 {

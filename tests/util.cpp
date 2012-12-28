@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "cpu/util.h"
+#include "util/util.h"
 
 TEST(UtilTest, ToStr)
 {

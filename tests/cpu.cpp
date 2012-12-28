@@ -2,8 +2,8 @@
 
 #include "cpu/cpu.h"
 #include "cpu/memory.h"
-#include "cpu/units.h"
-#include "cpu/util.h"
+#include "util/units.h"
+#include "util/util.h"
 
 #define EXPECT_FLAGS(z, n, h, c) \
     EXPECT_EQ(z, _cpu.flag(gb::Cpu::FlagZ)); \
