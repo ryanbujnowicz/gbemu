@@ -1,0 +1,10 @@
+import os
+Import('env')
+
+prog = env.Program('zas', Glob("*.cpp"), 
+                   LIBS=['cpu', 'util', 'boost_program_options-mt'], 
+                   LIBPATH=['#inst/lib'], 
+                   CPPPATH=["#inst/include"])
+
+env.Alias("install", env.Install(os.path.join(env['PREFIX'], "bin"), prog))
+
