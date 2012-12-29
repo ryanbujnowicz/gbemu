@@ -495,8 +495,7 @@ void Cpu::processNextInstruction()
         case 0x86: // (HL)
         case 0x87: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _add8(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x80))));
+            _add8(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0x80)));
             break;
         }
 
@@ -510,8 +509,7 @@ void Cpu::processNextInstruction()
         case 0x8E: // (HL)
         case 0x8F: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _add8(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x88))) + flag(gb::Cpu::FlagC));
+            _add8(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0x88)) + flag(gb::Cpu::FlagC));
             break;
         }
 
@@ -525,8 +523,7 @@ void Cpu::processNextInstruction()
         case 0x96: // (HL)
         case 0x97: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _sub8(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x90))));
+            _sub8(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0x90)));
             break;
         }
 
@@ -540,8 +537,7 @@ void Cpu::processNextInstruction()
         case 0x9E: // (HL)
         case 0x9F: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _sub8(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x98))) + flag(gb::Cpu::FlagC));
+            _sub8(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0x98)) + flag(gb::Cpu::FlagC));
             break;
         }
 
@@ -555,8 +551,7 @@ void Cpu::processNextInstruction()
         case 0xA6: // (HL)
         case 0xA7: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _and(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xA0))));
+            _and(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0xA0)));
             break;
         }
 
@@ -570,8 +565,7 @@ void Cpu::processNextInstruction()
         case 0xAE: // (HL)
         case 0xAF: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _xor(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xA8))));
+            _xor(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0xA8)));
             break;
         }
 
@@ -585,8 +579,7 @@ void Cpu::processNextInstruction()
         case 0xB6: // (HL)
         case 0xB7: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
-            _or(gb::Cpu::RegA, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xB0))));
+            _or(gb::Cpu::RegA, _getTargetValue8(_getOffsetTarget8(opcode, 0xB0)));
             break;
         }
 
@@ -600,9 +593,8 @@ void Cpu::processNextInstruction()
         case 0xBE: // (HL)
         case 0xBF: // A
         {
-            // TODO: getOffsetTarget8(opcode, offset)
             _compare(_getTargetValue8(gb::Cpu::RegA),
-                     _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xB8))));
+                     _getTargetValue8(_getOffsetTarget8(opcode, 0xB8)));
             break;
         }
 
@@ -853,8 +845,7 @@ void Cpu::processNextInstruction()
                 case 0x46: // (HL)
                 case 0x47: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(0, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x40))));
+                    _bit(0, _getTargetValue8(_getOffsetTarget8(opcode, 0x40)));
                     break;
                 }
 
@@ -868,8 +859,7 @@ void Cpu::processNextInstruction()
                 case 0x4E: // (HL)
                 case 0x4F: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(1, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x48))));
+                    _bit(1, _getTargetValue8(_getOffsetTarget8(opcode, 0x48)));
                     break;
                 }
 
@@ -883,8 +873,7 @@ void Cpu::processNextInstruction()
                 case 0x56: // (HL)
                 case 0x57: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(2, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x50))));
+                    _bit(2, _getTargetValue8(_getOffsetTarget8(opcode, 0x50)));
                     break;
                 }
 
@@ -898,8 +887,7 @@ void Cpu::processNextInstruction()
                 case 0x5E: // (HL)
                 case 0x5F: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(3, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x58))));
+                    _bit(3, _getTargetValue8(_getOffsetTarget8(opcode, 0x58)));
                     break;
                 }
 
@@ -913,8 +901,7 @@ void Cpu::processNextInstruction()
                 case 0x66: // (HL)
                 case 0x67: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(4, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x60))));
+                    _bit(4, _getTargetValue8(_getOffsetTarget8(opcode, 0x60)));
                     break;
                 }
 
@@ -928,8 +915,7 @@ void Cpu::processNextInstruction()
                 case 0x6E: // (HL)
                 case 0x6F: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(5, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x68))));
+                    _bit(5, _getTargetValue8(_getOffsetTarget8(opcode, 0x68)));
                     break;
                 }
 
@@ -943,8 +929,7 @@ void Cpu::processNextInstruction()
                 case 0x76: // (HL)
                 case 0x77: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(6, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x70))));
+                    _bit(6, _getTargetValue8(_getOffsetTarget8(opcode, 0x70)));
                     break;
                 }
 
@@ -958,8 +943,7 @@ void Cpu::processNextInstruction()
                 case 0x7E: // (HL)
                 case 0x7F: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _bit(7, _getTargetValue8(static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x78))));
+                    _bit(7, _getTargetValue8(_getOffsetTarget8(opcode, 0x78)));
                     break;
                 }
 
@@ -973,8 +957,7 @@ void Cpu::processNextInstruction()
                 case 0x86: // (HL)
                 case 0x87: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(0, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x80)));
+                    _clear(0, _getOffsetTarget8(opcode, 0x80));
                     break;
                 }
 
@@ -988,8 +971,7 @@ void Cpu::processNextInstruction()
                 case 0x8E: // (HL)
                 case 0x8F: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(1, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x88)));
+                    _clear(1, _getOffsetTarget8(opcode, 0x88));
                     break;
                 }
 
@@ -1003,8 +985,7 @@ void Cpu::processNextInstruction()
                 case 0x96: // (HL)
                 case 0x97: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(2, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x90)));
+                    _clear(2, _getOffsetTarget8(opcode, 0x90));
                     break;
                 }
 
@@ -1018,8 +999,7 @@ void Cpu::processNextInstruction()
                 case 0x9E: // (HL)
                 case 0x9F: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(3, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0x98)));
+                    _clear(3, _getOffsetTarget8(opcode, 0x98));
                     break;
                 }
 
@@ -1033,8 +1013,7 @@ void Cpu::processNextInstruction()
                 case 0xA6: // (HL)
                 case 0xA7: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(4, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xA0)));
+                    _clear(4, _getOffsetTarget8(opcode, 0xA0));
                     break;
                 }
 
@@ -1048,8 +1027,7 @@ void Cpu::processNextInstruction()
                 case 0xAE: // (HL)
                 case 0xAF: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(5, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xA8)));
+                    _clear(5, _getOffsetTarget8(opcode, 0xA8));
                     break;
                 }
 
@@ -1063,8 +1041,7 @@ void Cpu::processNextInstruction()
                 case 0xB6: // (HL)
                 case 0xB7: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(6, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xB0)));
+                    _clear(6, _getOffsetTarget8(opcode, 0xB0));
                     break;
                 }
 
@@ -1078,8 +1055,7 @@ void Cpu::processNextInstruction()
                 case 0xBE: // (HL)
                 case 0xBF: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _clear(7, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xB8)));
+                    _clear(7, _getOffsetTarget8(opcode, 0xB8));
                     break;
                 }
 
@@ -1093,8 +1069,7 @@ void Cpu::processNextInstruction()
                 case 0xC6: // (HL)
                 case 0xC7: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(0, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xC0)));
+                    _set(0, _getOffsetTarget8(opcode, 0xC0));
                     break;
                 }
 
@@ -1108,8 +1083,7 @@ void Cpu::processNextInstruction()
                 case 0xCE: // (HL)
                 case 0xCF: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(1, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xC8)));
+                    _set(1, _getOffsetTarget8(opcode, 0xC8));
                     break;
                 }
 
@@ -1123,8 +1097,7 @@ void Cpu::processNextInstruction()
                 case 0xD6: // (HL)
                 case 0xD7: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(2, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xD0)));
+                    _set(2, _getOffsetTarget8(opcode, 0xD0));
                     break;
                 }
 
@@ -1138,8 +1111,7 @@ void Cpu::processNextInstruction()
                 case 0xDE: // (HL)
                 case 0xDF: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(3, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xD8)));
+                    _set(3, _getOffsetTarget8(opcode, 0xD8));
                     break;
                 }
 
@@ -1153,8 +1125,7 @@ void Cpu::processNextInstruction()
                 case 0xE6: // (HL)
                 case 0xE7: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(4, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xE0)));
+                    _set(4, _getOffsetTarget8(opcode, 0xE0));
                     break;
                 }
 
@@ -1168,8 +1139,7 @@ void Cpu::processNextInstruction()
                 case 0xEE: // (HL)
                 case 0xEF: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(5, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xE8)));
+                    _set(5, _getOffsetTarget8(opcode, 0xE8));
                     break;
                 }
 
@@ -1183,8 +1153,7 @@ void Cpu::processNextInstruction()
                 case 0xF6: // (HL)
                 case 0xF7: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(6, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xF0)));
+                    _set(6, _getOffsetTarget8(opcode, 0xF0));
                     break;
                 }
 
@@ -1198,8 +1167,7 @@ void Cpu::processNextInstruction()
                 case 0xFE: // (HL)
                 case 0xFF: // A
                 {
-                    // TODO: getOffsetTarget8(opcode, offset)
-                    _set(7, static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - 0xF8)));
+                    _set(7, _getOffsetTarget8(opcode, 0xF8));
                     break;
                 }
             }
@@ -1226,7 +1194,6 @@ void Cpu::processNextInstruction()
         // ADC A,n
         case 0xCE:
         {
-            // TODO: getOffsetTarget8(opcode, offset)
             gb::Word n = _getArg8();
             _add8(gb::Cpu::RegA, n + flag(gb::Cpu::FlagC));
             break;
@@ -1322,7 +1289,6 @@ void Cpu::processNextInstruction()
         // SBC A,n
         case 0xDE:
         {
-            // TODO: getOffsetTarget8(opcode, offset)
             gb::Word n = _getArg8();
             _sub8(gb::Cpu::RegA, n + flag(gb::Cpu::FlagC));
             break;
@@ -1455,7 +1421,6 @@ void Cpu::processNextInstruction()
 
             gb::Dword val = 0x00;
 
-            // TODO: gb::isBitSet() helper
             // Do either a SUB or ADD check depending on sign of val
             if (offset > 0) {
                 val = sp + absOffset;
@@ -1541,6 +1506,11 @@ Cpu::Target Cpu::_getTarget8(gb::Word opcode) const
 Cpu::Target Cpu::_getTarget16(gb::Word opcode) const
 {
     return static_cast<Cpu::Target>(Cpu::RegBC + ((opcode & 0xF0) >> 4));
+}
+
+Cpu::Target Cpu::_getOffsetTarget8(gb::Word opcode, gb::Word offset) const
+{
+    return static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - offset));
 }
 
 Cpu::Target Cpu::_convertToMemTarget(Cpu::Target target) const
@@ -1712,7 +1682,6 @@ void Cpu::_add8(Cpu::Target target, gb::Word val)
 
     int fullRes = *data + val;
     gb::Word res = static_cast<gb::Word>(fullRes);
-    // TODO: gb::isBitSet() helper
     _assignFlags(res == 0, 
                  0, 
                  ((((*data)&0x0F) + (val&0x0F))&0x10) == 0x10, 
@@ -1726,7 +1695,6 @@ void Cpu::_add16(Cpu::Target target, gb::Dword val)
 
     int fullRes = *data + val;
     gb::Dword res = static_cast<gb::Dword>(fullRes);
-    // TODO: gb::isBitSet() helper
     _assignFlags(res == 0, 
                  0, 
                  ((((*data)&0x0FFF) + (val&0x0FFF))&0x1000) == 0x1000, 
@@ -1740,7 +1708,6 @@ void Cpu::_sub8(Cpu::Target target, gb::Word val)
 
     int fullRes = *data - val;
     gb::Word res = static_cast<gb::Word>(fullRes);
-    // TODO: gb::isBitSet() helper
     _assignFlags(res == 0, 
                  1, 
                  (static_cast<int>((*data)&0x0F) - static_cast<int>(val&0x0F)) < 0,
@@ -1754,7 +1721,6 @@ void Cpu::_sub16(Cpu::Target target, gb::Dword val)
 
     int fullRes = *data - val;
     gb::Dword res = static_cast<gb::Dword>(fullRes);
-    // TODO: gb::isBitSet() helper
     _assignFlags(res == 0, 
                  1, 
                  (static_cast<int>((*data)&0x0FFF) - static_cast<int>(val&0x0FFF)) < 0,
@@ -1882,7 +1848,6 @@ void Cpu::_compare(gb::Word a, gb::Word b)
     // Similar to a subtract but no register values change
     int fullRes = a - b;
     gb::Word res = static_cast<gb::Word>(fullRes);
-    // TODO: gb::isBitSet() helper
     _assignFlags(res == 0, 
                  1, 
                  (static_cast<int>(a&0x0F) - static_cast<int>(b&0x0F)) < 0,

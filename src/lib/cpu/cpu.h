@@ -137,6 +137,7 @@ protected:
 
     Cpu::Target _getTarget8(gb::Word opcode) const;
     Cpu::Target _getTarget16(gb::Word opcode) const;
+    Cpu::Target _getOffsetTarget8(gb::Word opcode, gb::Word offset) const;
     Cpu::Target _convertToMemTarget(Cpu::Target target) const;
     Cpu::TargetType _getTargetType(Cpu::Target target) const;
     gb::Word _getTargetValue8(Cpu::Target target) const;
