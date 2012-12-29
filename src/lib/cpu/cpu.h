@@ -22,44 +22,44 @@ public:
         {
             struct
             {
-                Word F;
-                Word A;
+                Byte F;
+                Byte A;
             };    
-            Dword AF;
+            Word AF;
         };
 
         union
         {
             struct
             {
-                Word C;
-                Word B;
+                Byte C;
+                Byte B;
             };    
-            Dword BC;
+            Word BC;
         };
 
         union
         {
             struct
             {
-                Word E;
-                Word D;
+                Byte E;
+                Byte D;
             };    
-            Dword DE;
+            Word DE;
         };
 
         union
         {
             struct
             {
-                Word L;
-                Word H;
+                Byte L;
+                Byte H;
             };    
-            Dword HL;
+            Word HL;
         };
 
-        Dword SP;
-        Dword PC;
+        Word SP;
+        Word PC;
     };
 
 
@@ -120,7 +120,7 @@ public:
     void setMemory(Addressable* mem) { _memory = mem; }
 
     Registers& registers()     { return _registers; }
-    Word flag(Flag flag) const { return (_registers.F & (1<<flag)) >> flag; }
+    Byte flag(Flag flag) const { return (_registers.F & (1<<flag)) >> flag; }
 
     void reset();
     void processNextInstruction();
@@ -132,36 +132,36 @@ public:
     bool isHalted() const { return _isHalted; }
 
 protected:
-    gb::Word _getArg8();
-    gb::Dword _getArg16();
+    gb::Byte _getArg8();
+    gb::Word _getArg16();
 
-    Cpu::Target _getTarget8(gb::Word opcode) const;
-    Cpu::Target _getTarget16(gb::Word opcode) const;
-    Cpu::Target _getOffsetTarget8(gb::Word opcode, gb::Word offset) const;
+    Cpu::Target _getTarget8(gb::Byte opcode) const;
+    Cpu::Target _getTarget16(gb::Byte opcode) const;
+    Cpu::Target _getOffsetTarget8(gb::Byte opcode, gb::Byte offset) const;
     Cpu::Target _convertToMemTarget(Cpu::Target target) const;
     Cpu::TargetType _getTargetType(Cpu::Target target) const;
-    gb::Word _getTargetValue8(Cpu::Target target) const;
-    gb::Dword _getTargetValue16(Cpu::Target target) const;
+    gb::Byte _getTargetValue8(Cpu::Target target) const;
+    gb::Word _getTargetValue16(Cpu::Target target) const;
 
-    gb::Word* _getTargetPtr8(Cpu::Target target); 
-    gb::Dword* _getTargetPtr16(Cpu::Target target); 
+    gb::Byte* _getTargetPtr8(Cpu::Target target); 
+    gb::Word* _getTargetPtr16(Cpu::Target target); 
 
+    void _load(Cpu::Target target, gb::Byte val);
     void _load(Cpu::Target target, gb::Word val);
-    void _load(Cpu::Target target, gb::Dword val);
     void _load(Cpu::Target target, Cpu::Target source);
-    void _loadToMem(gb::Dword addr, Cpu::Target source);
-    void _loadFromMem(Cpu::Target target, gb::Dword addr);
+    void _loadToMem(gb::Word addr, Cpu::Target source);
+    void _loadFromMem(Cpu::Target target, gb::Word addr);
 
-    void _add8(Cpu::Target target, gb::Word val);
-    void _add16(Cpu::Target target, gb::Dword val);
-    void _sub8(Cpu::Target target, gb::Word val);
-    void _sub16(Cpu::Target target, gb::Dword val);
-    void _and(Cpu::Target target, gb::Word val);
-    void _or(Cpu::Target target, gb::Word val);
-    void _xor(Cpu::Target target, gb::Word val);
+    void _add8(Cpu::Target target, gb::Byte val);
+    void _add16(Cpu::Target target, gb::Word val);
+    void _sub8(Cpu::Target target, gb::Byte val);
+    void _sub16(Cpu::Target target, gb::Word val);
+    void _and(Cpu::Target target, gb::Byte val);
+    void _or(Cpu::Target target, gb::Byte val);
+    void _xor(Cpu::Target target, gb::Byte val);
     void _complement(Cpu::Target target);
 
-    void _bit(int bit, gb::Word val);
+    void _bit(int bit, gb::Byte val);
     void _set(int bit, Cpu::Target target);
     void _clear(int bit, Cpu::Target target);
 
@@ -175,13 +175,13 @@ protected:
 
     void _swap(Cpu::Target target);
     
-    void _compare(gb::Word a, gb::Word b);
+    void _compare(gb::Byte a, gb::Byte b);
 
-    void _call(gb::Dword addr);
+    void _call(gb::Word addr);
     void _return();
     void _reset();
 
-    void _assignFlag(Cpu::Flag flag, gb::Word val);
+    void _assignFlag(Cpu::Flag flag, gb::Byte val);
     void _assignFlags(int z, int n, int h, int c);
     
 private:

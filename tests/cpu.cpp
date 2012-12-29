@@ -40,20 +40,20 @@ protected:
     gb::Cpu _cpu;
     gb::Memory _mem;
 
-    void _loadAndExecute(gb::Word opcode)
+    void _loadAndExecute(gb::Byte opcode)
     {
         _mem[_cpu.registers().PC] = opcode; 
         _cpu.processNextInstruction();
     }
 
-    void _loadAndExecute(gb::Word opcode, gb::Word arg)
+    void _loadAndExecute(gb::Byte opcode, gb::Byte arg)
     {
         _mem[_cpu.registers().PC] = opcode; 
         _mem[_cpu.registers().PC + 0x0001] = arg; 
         _cpu.processNextInstruction();
     }
 
-    void _loadAndExecute(gb::Word opcode, gb::Word arg1, gb::Word arg2)
+    void _loadAndExecute(gb::Byte opcode, gb::Byte arg1, gb::Byte arg2)
     {
         _mem[_cpu.registers().PC] = opcode; 
         _mem[_cpu.registers().PC + 0x0001] = arg1; 
@@ -106,7 +106,7 @@ TEST_F(CpuTest, Opcode0x02Test)
 TEST_F(CpuTest, Opcode0x03Test)
 {
     // INC BC
-    gb::Dword prev = _cpu.registers().BC;
+    gb::Word prev = _cpu.registers().BC;
 
     _loadAndExecute(0x03);
     EXPECT_EQ(prev + 1, _cpu.registers().BC);
@@ -123,7 +123,7 @@ TEST_F(CpuTest, Opcode0x03Test)
 TEST_F(CpuTest, Opcode0x04Test)
 {
     // INC B
-    gb::Word prev = _cpu.registers().B;
+    gb::Byte prev = _cpu.registers().B;
 
     _loadAndExecute(0x04);
     EXPECT_EQ(prev + 1, _cpu.registers().B);
@@ -243,7 +243,7 @@ TEST_F(CpuTest, Opcode0x0BTest)
 TEST_F(CpuTest, Opcode0x0CTest)
 {
     // INC C
-    gb::Word prev = _cpu.registers().C;
+    gb::Byte prev = _cpu.registers().C;
 
     _loadAndExecute(0x0C);
     EXPECT_EQ(prev + 1, _cpu.registers().C);
@@ -324,7 +324,7 @@ TEST_F(CpuTest, Opcode0x12Test)
 TEST_F(CpuTest, Opcode0x13Test)
 {
     // INC DE
-    gb::Dword prev = _cpu.registers().DE;
+    gb::Word prev = _cpu.registers().DE;
 
     _loadAndExecute(0x13);
     EXPECT_EQ(prev + 1, _cpu.registers().DE);
@@ -341,7 +341,7 @@ TEST_F(CpuTest, Opcode0x13Test)
 TEST_F(CpuTest, Opcode0x14Test)
 {
     // INC D
-    gb::Word prev = _cpu.registers().D;
+    gb::Byte prev = _cpu.registers().D;
 
     _loadAndExecute(0x14);
     EXPECT_EQ(prev + 1, _cpu.registers().D);
@@ -473,7 +473,7 @@ TEST_F(CpuTest, Opcode0x1BTest)
 TEST_F(CpuTest, Opcode0x1CTest)
 {
     // INC E
-    gb::Word prev = _cpu.registers().E;
+    gb::Byte prev = _cpu.registers().E;
 
     _loadAndExecute(0x1C);
     EXPECT_EQ(prev + 1, _cpu.registers().E);
@@ -588,8 +588,8 @@ TEST_F(CpuTest, Opcode0x21Test)
 TEST_F(CpuTest, Opcode0x22Test)
 {
     // LDI (HL),A
-    gb::Word val = _cpu.registers().A;
-    gb::Dword hl = _cpu.registers().HL;
+    gb::Byte val = _cpu.registers().A;
+    gb::Word hl = _cpu.registers().HL;
 
     _loadAndExecute(0x22);
     EXPECT_EQ(val, _mem[hl]);
@@ -600,7 +600,7 @@ TEST_F(CpuTest, Opcode0x22Test)
 TEST_F(CpuTest, Opcode0x23Test)
 {
     // INC HL
-    gb::Dword prev = _cpu.registers().HL;
+    gb::Word prev = _cpu.registers().HL;
 
     _loadAndExecute(0x23);
     EXPECT_EQ(prev + 1, _cpu.registers().HL);
@@ -617,7 +617,7 @@ TEST_F(CpuTest, Opcode0x23Test)
 TEST_F(CpuTest, Opcode0x24Test)
 {
     // INC H
-    gb::Word prev = _cpu.registers().H;
+    gb::Byte prev = _cpu.registers().H;
 
     _loadAndExecute(0x24);
     EXPECT_EQ(prev + 1, _cpu.registers().H);
@@ -819,7 +819,7 @@ TEST_F(CpuTest, Opcode0x2BTest)
 TEST_F(CpuTest, Opcode0x2CTest)
 {
     // INC L
-    gb::Word prev = _cpu.registers().L;
+    gb::Byte prev = _cpu.registers().L;
 
     _loadAndExecute(0x2C);
     EXPECT_EQ(prev + 1, _cpu.registers().L);
@@ -927,7 +927,7 @@ TEST_F(CpuTest, Opcode0x32Test)
 TEST_F(CpuTest, Opcode0x33Test)
 {
     // INC SP
-    gb::Dword prev = _cpu.registers().SP;
+    gb::Word prev = _cpu.registers().SP;
 
     _loadAndExecute(0x33);
     EXPECT_EQ(prev + 1, _cpu.registers().SP);
@@ -944,7 +944,7 @@ TEST_F(CpuTest, Opcode0x33Test)
 TEST_F(CpuTest, Opcode0x34Test)
 {
     // INC (HL)
-    gb::Word prev = _mem[_cpu.registers().HL];
+    gb::Byte prev = _mem[_cpu.registers().HL];
 
     _loadAndExecute(0x34);
     EXPECT_EQ(prev + 1, _mem[_cpu.registers().HL]);
@@ -1073,7 +1073,7 @@ TEST_F(CpuTest, Opcode0x3BTest)
 TEST_F(CpuTest, Opcode0x3CTest)
 {
     // INC A
-    gb::Word prev = _cpu.registers().A;
+    gb::Byte prev = _cpu.registers().A;
 
     _loadAndExecute(0x3C);
     EXPECT_EQ(prev + 1, _cpu.registers().A);
@@ -1448,7 +1448,7 @@ TEST_F(CpuTest, Opcode0x66Test)
 TEST_F(CpuTest, Opcode0x67Test)
 {
     // LD H,A
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0x67);
     EXPECT_EQ(val, _cpu.registers().H);
     EXPECT_FLAGS(0,0,0,0);
@@ -1457,7 +1457,7 @@ TEST_F(CpuTest, Opcode0x67Test)
 TEST_F(CpuTest, Opcode0x68Test)
 {
     // LD L,B
-    gb::Word val = _cpu.registers().B;
+    gb::Byte val = _cpu.registers().B;
     _loadAndExecute(0x68);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1466,7 +1466,7 @@ TEST_F(CpuTest, Opcode0x68Test)
 TEST_F(CpuTest, Opcode0x69Test)
 {
     // LD L,C
-    gb::Word val = _cpu.registers().C;
+    gb::Byte val = _cpu.registers().C;
     _loadAndExecute(0x69);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1475,7 +1475,7 @@ TEST_F(CpuTest, Opcode0x69Test)
 TEST_F(CpuTest, Opcode0x6ATest)
 {
     // LD L,D
-    gb::Word val = _cpu.registers().D;
+    gb::Byte val = _cpu.registers().D;
     _loadAndExecute(0x6A);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1484,7 +1484,7 @@ TEST_F(CpuTest, Opcode0x6ATest)
 TEST_F(CpuTest, Opcode0x6BTest)
 {
     // LD L,E
-    gb::Word val = _cpu.registers().E;
+    gb::Byte val = _cpu.registers().E;
     _loadAndExecute(0x6B);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1493,7 +1493,7 @@ TEST_F(CpuTest, Opcode0x6BTest)
 TEST_F(CpuTest, Opcode0x6CTest)
 {
     // LD L,H
-    gb::Word val = _cpu.registers().H;
+    gb::Byte val = _cpu.registers().H;
     _loadAndExecute(0x6C);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1502,7 +1502,7 @@ TEST_F(CpuTest, Opcode0x6CTest)
 TEST_F(CpuTest, Opcode0x6DTest)
 {
     // LD L,L
-    gb::Word val = _cpu.registers().L;
+    gb::Byte val = _cpu.registers().L;
     _loadAndExecute(0x6D);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1511,7 +1511,7 @@ TEST_F(CpuTest, Opcode0x6DTest)
 TEST_F(CpuTest, Opcode0x6ETest)
 {
     // LD L,(HL)
-    gb::Word val = _mem[_cpu.registers().HL];
+    gb::Byte val = _mem[_cpu.registers().HL];
     _loadAndExecute(0x6E);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1520,7 +1520,7 @@ TEST_F(CpuTest, Opcode0x6ETest)
 TEST_F(CpuTest, Opcode0x6FTest)
 {
     // LD L,A
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0x6F);
     EXPECT_EQ(val, _cpu.registers().L);
     EXPECT_FLAGS(0,0,0,0);
@@ -1529,7 +1529,7 @@ TEST_F(CpuTest, Opcode0x6FTest)
 TEST_F(CpuTest, Opcode0x70Test)
 {
     // LD (HL),B
-    gb::Word val = _cpu.registers().B;
+    gb::Byte val = _cpu.registers().B;
     _loadAndExecute(0x70);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1538,7 +1538,7 @@ TEST_F(CpuTest, Opcode0x70Test)
 TEST_F(CpuTest, Opcode0x71Test)
 {
     // LD (HL),C
-    gb::Word val = _cpu.registers().C;
+    gb::Byte val = _cpu.registers().C;
     _loadAndExecute(0x71);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1547,7 +1547,7 @@ TEST_F(CpuTest, Opcode0x71Test)
 TEST_F(CpuTest, Opcode0x72Test)
 {
     // LD (HL),D
-    gb::Word val = _cpu.registers().D;
+    gb::Byte val = _cpu.registers().D;
     _loadAndExecute(0x72);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1556,7 +1556,7 @@ TEST_F(CpuTest, Opcode0x72Test)
 TEST_F(CpuTest, Opcode0x73Test)
 {
     // LD (HL),E
-    gb::Word val = _cpu.registers().E;
+    gb::Byte val = _cpu.registers().E;
     _loadAndExecute(0x73);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1565,7 +1565,7 @@ TEST_F(CpuTest, Opcode0x73Test)
 TEST_F(CpuTest, Opcode0x74Test)
 {
     // LD (HL),H
-    gb::Word val = _cpu.registers().H;
+    gb::Byte val = _cpu.registers().H;
     _loadAndExecute(0x74);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1574,7 +1574,7 @@ TEST_F(CpuTest, Opcode0x74Test)
 TEST_F(CpuTest, Opcode0x75Test)
 {
     // LD (HL),L
-    gb::Word val = _cpu.registers().L;
+    gb::Byte val = _cpu.registers().L;
     _loadAndExecute(0x75);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1591,7 +1591,7 @@ TEST_F(CpuTest, Opcode0x76Test)
 TEST_F(CpuTest, Opcode0x77Test)
 {
     // LD (HL),A
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0x77);
     EXPECT_EQ(val, _mem[_cpu.registers().HL]);
     EXPECT_FLAGS(0,0,0,0);
@@ -1600,7 +1600,7 @@ TEST_F(CpuTest, Opcode0x77Test)
 TEST_F(CpuTest, Opcode0x78Test)
 {
     // LD A,B
-    gb::Word val = _cpu.registers().B;
+    gb::Byte val = _cpu.registers().B;
     _loadAndExecute(0x78);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1609,7 +1609,7 @@ TEST_F(CpuTest, Opcode0x78Test)
 TEST_F(CpuTest, Opcode0x79Test)
 {
     // LD A,C
-    gb::Word val = _cpu.registers().C;
+    gb::Byte val = _cpu.registers().C;
     _loadAndExecute(0x79);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1618,7 +1618,7 @@ TEST_F(CpuTest, Opcode0x79Test)
 TEST_F(CpuTest, Opcode0x7ATest)
 {
     // LD A,D
-    gb::Word val = _cpu.registers().D;
+    gb::Byte val = _cpu.registers().D;
     _loadAndExecute(0x7A);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1627,7 +1627,7 @@ TEST_F(CpuTest, Opcode0x7ATest)
 TEST_F(CpuTest, Opcode0x7BTest)
 {
     // LD A,E
-    gb::Word val = _cpu.registers().E;
+    gb::Byte val = _cpu.registers().E;
     _loadAndExecute(0x7B);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1636,7 +1636,7 @@ TEST_F(CpuTest, Opcode0x7BTest)
 TEST_F(CpuTest, Opcode0x7CTest)
 {
     // LD A,H
-    gb::Word val = _cpu.registers().H;
+    gb::Byte val = _cpu.registers().H;
     _loadAndExecute(0x7C);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1645,7 +1645,7 @@ TEST_F(CpuTest, Opcode0x7CTest)
 TEST_F(CpuTest, Opcode0x7DTest)
 {
     // LD A,L
-    gb::Word val = _cpu.registers().L;
+    gb::Byte val = _cpu.registers().L;
     _loadAndExecute(0x7D);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1654,7 +1654,7 @@ TEST_F(CpuTest, Opcode0x7DTest)
 TEST_F(CpuTest, Opcode0x7ETest)
 {
     // LD A,(HL)
-    gb::Word val = _mem[_cpu.registers().HL];
+    gb::Byte val = _mem[_cpu.registers().HL];
     _loadAndExecute(0x7E);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -1663,7 +1663,7 @@ TEST_F(CpuTest, Opcode0x7ETest)
 TEST_F(CpuTest, Opcode0x7FTest)
 {
     // LD A,A
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0x7F);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -5804,7 +5804,7 @@ TEST_F(CpuTest, Opcode0xCB77Test)
 TEST_F(CpuTest, Opcode0xCB78Test)
 {
     // BIT 7,B
-    _cpu.registers().B = static_cast<gb::Word>(~0x80);
+    _cpu.registers().B = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x78);
     EXPECT_FLAGS(1,0,1,0);
 
@@ -5816,7 +5816,7 @@ TEST_F(CpuTest, Opcode0xCB78Test)
 TEST_F(CpuTest, Opcode0xCB79Test)
 {
     // BIT 7,C
-    _cpu.registers().C = static_cast<gb::Word>(~0x80);
+    _cpu.registers().C = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x78);
     _loadAndExecute(0xCB, 0x79);
     EXPECT_FLAGS(1,0,1,0);
@@ -5829,7 +5829,7 @@ TEST_F(CpuTest, Opcode0xCB79Test)
 TEST_F(CpuTest, Opcode0xCB7ATest)
 {
     // BIT 7,D
-    _cpu.registers().D = static_cast<gb::Word>(~0x80);
+    _cpu.registers().D = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x7A);
     EXPECT_FLAGS(1,0,1,0);
 
@@ -5841,7 +5841,7 @@ TEST_F(CpuTest, Opcode0xCB7ATest)
 TEST_F(CpuTest, Opcode0xCB7BTest)
 {
     // BIT 7,E
-    _cpu.registers().E = static_cast<gb::Word>(~0x80);
+    _cpu.registers().E = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x7B);
     EXPECT_FLAGS(1,0,1,0);
 
@@ -5853,7 +5853,7 @@ TEST_F(CpuTest, Opcode0xCB7BTest)
 TEST_F(CpuTest, Opcode0xCB7CTest)
 {
     // BIT 7,H
-    _cpu.registers().H = static_cast<gb::Word>(~0x80);
+    _cpu.registers().H = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x7C);
     EXPECT_FLAGS(1,0,1,0);
 
@@ -5865,7 +5865,7 @@ TEST_F(CpuTest, Opcode0xCB7CTest)
 TEST_F(CpuTest, Opcode0xCB7DTest)
 {
     // BIT 7,L
-    _cpu.registers().L = static_cast<gb::Word>(~0x80);
+    _cpu.registers().L = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x7D);
     EXPECT_FLAGS(1,0,1,0);
 
@@ -5877,11 +5877,11 @@ TEST_F(CpuTest, Opcode0xCB7DTest)
 TEST_F(CpuTest, Opcode0xCB7ETest)
 {
     // BIT 7,(HL)
-    _mem[_cpu.registers().HL] = static_cast<gb::Word>(~0x80);
+    _mem[_cpu.registers().HL] = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x7E);
     EXPECT_FLAGS(1,0,1,0);
 
-    _mem[_cpu.registers().HL] = static_cast<gb::Word>(0x80);
+    _mem[_cpu.registers().HL] = static_cast<gb::Byte>(0x80);
     _loadAndExecute(0xCB, 0x7E);
     EXPECT_FLAGS(0,0,1,0);
 }
@@ -5889,7 +5889,7 @@ TEST_F(CpuTest, Opcode0xCB7ETest)
 TEST_F(CpuTest, Opcode0xCB7FTest)
 {
     // BIT 7,A
-    _cpu.registers().A = static_cast<gb::Word>(~0x80);
+    _cpu.registers().A = static_cast<gb::Byte>(~0x80);
     _loadAndExecute(0xCB, 0x7F);
     EXPECT_FLAGS(1,0,1,0);
 
@@ -7280,7 +7280,7 @@ TEST_F(CpuTest, Opcode0xDFTest)
 TEST_F(CpuTest, Opcode0xE0Test)
 {
     // LD (FF00+n),A 
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0xE0, 11);
     EXPECT_EQ(val, _mem[0xFF00 + 11]);
     EXPECT_FLAGS(0,0,0,0);
@@ -7302,7 +7302,7 @@ TEST_F(CpuTest, Opcode0xE1Test)
 TEST_F(CpuTest, Opcode0xE2Test)
 {
     // LD (FF00+C),A
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0xE2);
     EXPECT_EQ(val, _mem[0xFF00 + _cpu.registers().C]);
     EXPECT_FLAGS(0,0,0,0);
@@ -7352,7 +7352,7 @@ TEST_F(CpuTest, Opcode0xE8Test)
     // ADD SP,dd
     _cpu.registers().SP = 0x0A80;
     
-    gb::Dword val = _cpu.registers().SP + 38;
+    gb::Word val = _cpu.registers().SP + 38;
     _loadAndExecute(0xE8, 38);
     EXPECT_EQ(val, _cpu.registers().SP);
     EXPECT_FLAGS(0,0,0,0);
@@ -7405,7 +7405,7 @@ TEST_F(CpuTest, Opcode0xE9Test)
 TEST_F(CpuTest, Opcode0xEATest)
 {
     // LD (nn),A
-    gb::Word val = _cpu.registers().A;
+    gb::Byte val = _cpu.registers().A;
     _loadAndExecute(0xEA, 0xFF, 0x01);
     EXPECT_EQ(val, _mem[0x01FF]);
     EXPECT_FLAGS(0,0,0,0);
@@ -7441,7 +7441,7 @@ TEST_F(CpuTest, Opcode0xEFTest)
 TEST_F(CpuTest, Opcode0xF0Test)
 {
     // LD A,(FF00+n)
-    gb::Word val = _mem[0xFF00 + 0xBF];
+    gb::Byte val = _mem[0xFF00 + 0xBF];
     _loadAndExecute(0xF0, 0xBF);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -7463,7 +7463,7 @@ TEST_F(CpuTest, Opcode0xF1Test)
 TEST_F(CpuTest, Opcode0xF2Test)
 {
     // LD A,(FF00+C)
-    gb::Word val = _mem[0xFF00 + _cpu.registers().C];
+    gb::Byte val = _mem[0xFF00 + _cpu.registers().C];
     _loadAndExecute(0xF2);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);
@@ -7521,7 +7521,7 @@ TEST_F(CpuTest, Opcode0xF8Test)
     // LD HL,SP+dd
     _cpu.registers().SP = 0x0A05;
     
-    gb::Dword val = _cpu.registers().SP + 38;
+    gb::Word val = _cpu.registers().SP + 38;
     _loadAndExecute(0xF8, 38);
     EXPECT_EQ(val, _cpu.registers().HL);
     EXPECT_FLAGS(0,0,0,0);
@@ -7566,7 +7566,7 @@ TEST_F(CpuTest, Opcode0xF8Test)
 TEST_F(CpuTest, Opcode0xF9Test)
 {
     // LD SP,HL
-    gb::Dword val = _cpu.registers().HL;
+    gb::Word val = _cpu.registers().HL;
     _loadAndExecute(0xF9);
     EXPECT_EQ(val, _cpu.registers().SP);
     EXPECT_FLAGS(0,0,0,0);
@@ -7575,7 +7575,7 @@ TEST_F(CpuTest, Opcode0xF9Test)
 TEST_F(CpuTest, Opcode0xFATest)
 {
     // LD A,(nn)
-    gb::Word val = _mem[0xB0F1];
+    gb::Byte val = _mem[0xB0F1];
     _loadAndExecute(0xFA, 0xF1, 0xB0);
     EXPECT_EQ(val, _cpu.registers().A);
     EXPECT_FLAGS(0,0,0,0);

@@ -21,7 +21,7 @@ void Cpu::reset()
 
 void Cpu::processNextInstruction()
 {
-    gb::Word opcode = _getArg8();
+    gb::Byte opcode = _getArg8();
 
     switch (opcode) {
 
@@ -55,7 +55,7 @@ void Cpu::processNextInstruction()
             {
                 // No flags are set, so just use a load
                 Target target = _getTarget16(opcode);
-                _load(target, static_cast<gb::Dword>(_getTargetValue16(target) + 1));
+                _load(target, static_cast<gb::Word>(_getTargetValue16(target) + 1));
                 break;
             }
 
@@ -70,7 +70,7 @@ void Cpu::processNextInstruction()
         case 0x3C: // A
             {
                 // Carry bit is set by add, but not by inc
-            gb::Word cFlag = flag(FlagC);
+            gb::Byte cFlag = flag(FlagC);
             _add8(_getTarget8(opcode - 0x04), 1);
             _assignFlag(FlagC, cFlag);
             break;
@@ -86,7 +86,7 @@ void Cpu::processNextInstruction()
         case 0x35: // (HL)
         case 0x3D: // A
         {
-            gb::Word cFlag = flag(FlagC);
+            gb::Byte cFlag = flag(FlagC);
             _sub8(_getTarget8(opcode - 0x05), 1);
             _assignFlag(FlagC, cFlag);
             break;
@@ -124,7 +124,7 @@ void Cpu::processNextInstruction()
         case 0x09:
         {
             // z flag is not affected
-            gb::Word zFlag = flag(FlagZ);
+            gb::Byte zFlag = flag(FlagZ);
             _add16(gb::Cpu::RegHL, _getTargetValue16(gb::Cpu::RegBC));
             _assignFlag(gb::Cpu::FlagZ, zFlag);    
             break;
@@ -146,7 +146,7 @@ void Cpu::processNextInstruction()
         {
             // No flags are set, so just use a load
             Target target = _getTarget16(opcode);
-            _load(target, static_cast<gb::Dword>(_getTargetValue16(target) - 1));
+            _load(target, static_cast<gb::Word>(_getTargetValue16(target) - 1));
             break;
         }
 
@@ -183,7 +183,7 @@ void Cpu::processNextInstruction()
         case 0x19:
         {
             // z flag is not affected
-            gb::Word zFlag = flag(FlagZ);
+            gb::Byte zFlag = flag(FlagZ);
             _add16(gb::Cpu::RegHL, _getTargetValue16(gb::Cpu::RegDE));
             _assignFlag(gb::Cpu::FlagZ, zFlag);    
             break;
@@ -220,11 +220,11 @@ void Cpu::processNextInstruction()
             int h = flag(gb::Cpu::FlagH);
             int c = flag(gb::Cpu::FlagC);
 
-            gb::Word high = (_registers.A & 0xF0) >> 4;
-            gb::Word low = (_registers.A & 0x0F);
+            gb::Byte high = (_registers.A & 0xF0) >> 4;
+            gb::Byte low = (_registers.A & 0x0F);
 
             int newC = 0;
-            gb::Word toAdd = 0;
+            gb::Byte toAdd = 0;
 
             if (n == 0) {
                 if (c == 0 && h == 0 && high >= 0 && high <= 9 && low >= 0 && low <= 9) {
@@ -280,7 +280,7 @@ void Cpu::processNextInstruction()
         case 0x29:
         {
             // z flag is not affected
-            gb::Word zFlag = flag(FlagZ);
+            gb::Byte zFlag = flag(FlagZ);
             _add16(gb::Cpu::RegHL, _getTargetValue16(gb::Cpu::RegHL));
             _assignFlag(gb::Cpu::FlagZ, zFlag);    
             break;
@@ -340,7 +340,7 @@ void Cpu::processNextInstruction()
         case 0x39:
         {
             // z flag is not affected
-            gb::Word zFlag = flag(FlagZ);
+            gb::Byte zFlag = flag(FlagZ);
             _add16(gb::Cpu::RegHL, _getTargetValue16(gb::Cpu::RegSP));
             _assignFlag(gb::Cpu::FlagZ, zFlag);    
             break;
@@ -613,7 +613,7 @@ void Cpu::processNextInstruction()
         case 0xE1: // HL
         case 0xF1: // AF
         {
-            gb::Dword* data; 
+            gb::Word* data; 
             switch (opcode) {
                 case 0xC1: data = &_registers.BC; break;
                 case 0xD1: data = &_registers.DE; break;
@@ -622,8 +622,8 @@ void Cpu::processNextInstruction()
                 default: assert("Unhandled switch case"); break;
             }
 
-            gb::Word low = (*_memory)[_registers.SP++];
-            gb::Word high = (*_memory)[_registers.SP++];
+            gb::Byte low = (*_memory)[_registers.SP++];
+            gb::Byte high = (*_memory)[_registers.SP++];
             *data = (high << 8) | low;
             break;
         }
@@ -631,7 +631,7 @@ void Cpu::processNextInstruction()
         // JP NZ,(nn)
         case 0xC2:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (!flag(gb::Cpu::FlagZ)) {
                 _registers.PC = nn;
             }
@@ -641,7 +641,7 @@ void Cpu::processNextInstruction()
         // JP (nn)
         case 0xC3:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             _registers.PC = nn;
             break;
         }
@@ -650,7 +650,7 @@ void Cpu::processNextInstruction()
         // CALL NZ,(nn)
         case 0xC4:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (!flag(gb::Cpu::FlagZ)) {
                 _call(nn);
             }
@@ -663,7 +663,7 @@ void Cpu::processNextInstruction()
         case 0xE5: // HL
         case 0xF5: // AF
         {
-            gb::Dword* data; 
+            gb::Word* data; 
             switch (opcode) {
                 case 0xC5: data = &_registers.BC; break;
                 case 0xD5: data = &_registers.DE; break;
@@ -710,7 +710,7 @@ void Cpu::processNextInstruction()
         // JP Z,(nn)
         case 0xCA:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (flag(gb::Cpu::FlagZ)) {
                 _registers.PC = nn;
             }
@@ -1176,7 +1176,7 @@ void Cpu::processNextInstruction()
         // CALL Z,(nn)
         case 0xCC:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (flag(gb::Cpu::FlagZ)) {
                 _call(nn);
             }
@@ -1186,7 +1186,7 @@ void Cpu::processNextInstruction()
         // CALL (nn)
         case 0xCD:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             _call(nn);
             break;
         }
@@ -1194,7 +1194,7 @@ void Cpu::processNextInstruction()
         // ADC A,n
         case 0xCE:
         {
-            gb::Word n = _getArg8();
+            gb::Byte n = _getArg8();
             _add8(gb::Cpu::RegA, n + flag(gb::Cpu::FlagC));
             break;
         }
@@ -1218,7 +1218,7 @@ void Cpu::processNextInstruction()
         // JP NC,(nn)
         case 0xD2:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (!flag(gb::Cpu::FlagC)) {
                 _registers.PC = nn;
             }
@@ -1228,7 +1228,7 @@ void Cpu::processNextInstruction()
         // CALL NC,(nn)
         case 0xD4:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (!flag(gb::Cpu::FlagC)) {
                 _call(nn);
             }
@@ -1269,7 +1269,7 @@ void Cpu::processNextInstruction()
         // JP C,(nn)
         case 0xDA:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (flag(gb::Cpu::FlagC)) {
                 _registers.PC = nn;
             }
@@ -1279,7 +1279,7 @@ void Cpu::processNextInstruction()
         // CALL C,(nn)
         case 0xDC:
         {
-            gb::Dword nn = _getArg16();
+            gb::Word nn = _getArg16();
             if (flag(gb::Cpu::FlagC)) {
                 _call(nn);
             }
@@ -1289,7 +1289,7 @@ void Cpu::processNextInstruction()
         // SBC A,n
         case 0xDE:
         {
-            gb::Word n = _getArg8();
+            gb::Byte n = _getArg8();
             _sub8(gb::Cpu::RegA, n + flag(gb::Cpu::FlagC));
             break;
         }
@@ -1328,12 +1328,12 @@ void Cpu::processNextInstruction()
         // ADD SP,dd
         case 0xE8:
         {
-            gb::Word offset = _getArg8();
+            gb::Byte offset = _getArg8();
             int ioffset = gb::toInt8(offset);
             if (ioffset >= 0) {
                 _add16(gb::Cpu::RegSP, offset);
             } else {
-                gb::Word absOffset = abs(ioffset);
+                gb::Byte absOffset = abs(ioffset);
                 _sub16(gb::Cpu::RegSP, absOffset);
             }
             _assignFlag(gb::Cpu::FlagZ, 0);
@@ -1411,15 +1411,15 @@ void Cpu::processNextInstruction()
 
             // This is a special one, we want to add16 but the result doesn't
             // go into the same register.
-            gb::Dword* data = _getTargetPtr16(gb::Cpu::RegHL);
-            gb::Dword sp = _getTargetValue16(gb::Cpu::RegSP);
+            gb::Word* data = _getTargetPtr16(gb::Cpu::RegHL);
+            gb::Word sp = _getTargetValue16(gb::Cpu::RegSP);
 
             // This is an 8 bit signed, convert to a 16 bit signed
-            gb::Word arg = _getArg8();
+            gb::Byte arg = _getArg8();
             int offset = gb::toInt8(arg);
-            gb::Dword absOffset = abs(offset);
+            gb::Word absOffset = abs(offset);
 
-            gb::Dword val = 0x00;
+            gb::Word val = 0x00;
 
             // Do either a SUB or ADD check depending on sign of val
             if (offset > 0) {
@@ -1428,7 +1428,7 @@ void Cpu::processNextInstruction()
                 _assignFlags(0,
                              0, 
                              (((sp&0x0FFF) + (absOffset&0x0FFF))&0x1000) == 0x1000, 
-                             fullRes > std::numeric_limits<gb::Dword>::max());
+                             fullRes > std::numeric_limits<gb::Word>::max());
             } else {
                 val = sp - absOffset;
                 int fullRes = sp - absOffset;
@@ -1485,30 +1485,30 @@ void Cpu::processNextInstruction()
     }
 }
 
-gb::Word Cpu::_getArg8()
+gb::Byte Cpu::_getArg8()
 {
-    gb::Word arg = (*_memory)[_registers.PC++];
+    gb::Byte arg = (*_memory)[_registers.PC++];
     return arg;
 }
 
-gb::Dword Cpu::_getArg16()
+gb::Word Cpu::_getArg16()
 {
-    gb::Dword a = (*_memory)[_registers.PC++];
-    gb::Dword b = (*_memory)[_registers.PC++];
+    gb::Word a = (*_memory)[_registers.PC++];
+    gb::Word b = (*_memory)[_registers.PC++];
     return ((b << 8) | a);
 }
 
-Cpu::Target Cpu::_getTarget8(gb::Word opcode) const
+Cpu::Target Cpu::_getTarget8(gb::Byte opcode) const
 {
     return static_cast<Cpu::Target>(Cpu::RegB + (opcode/8));
 }
 
-Cpu::Target Cpu::_getTarget16(gb::Word opcode) const
+Cpu::Target Cpu::_getTarget16(gb::Byte opcode) const
 {
     return static_cast<Cpu::Target>(Cpu::RegBC + ((opcode & 0xF0) >> 4));
 }
 
-Cpu::Target Cpu::_getOffsetTarget8(gb::Word opcode, gb::Word offset) const
+Cpu::Target Cpu::_getOffsetTarget8(gb::Byte opcode, gb::Byte offset) const
 {
     return static_cast<gb::Cpu::Target>(gb::Cpu::RegB + (opcode - offset));
 }
@@ -1553,7 +1553,7 @@ Cpu::TargetType Cpu::_getTargetType(Cpu::Target target) const
     }
 }
 
-gb::Word Cpu::_getTargetValue8(Cpu::Target target) const
+gb::Byte Cpu::_getTargetValue8(Cpu::Target target) const
 {
     switch (target) {
         case Cpu::RegB:     return _registers.B;
@@ -1571,7 +1571,7 @@ gb::Word Cpu::_getTargetValue8(Cpu::Target target) const
     }        
 }
 
-gb::Dword Cpu::_getTargetValue16(Cpu::Target target) const
+gb::Word Cpu::_getTargetValue16(Cpu::Target target) const
 {
     switch (target) {
         case Cpu::RegBC:    return _registers.BC;
@@ -1582,7 +1582,7 @@ gb::Dword Cpu::_getTargetValue16(Cpu::Target target) const
     }        
 }
 
-gb::Word* Cpu::_getTargetPtr8(Cpu::Target target)
+gb::Byte* Cpu::_getTargetPtr8(Cpu::Target target)
 {
     switch (target) {
         case Cpu::RegB:     return &_registers.B;
@@ -1601,7 +1601,7 @@ gb::Word* Cpu::_getTargetPtr8(Cpu::Target target)
     return nullptr;
 }
 
-gb::Dword* Cpu::_getTargetPtr16(Cpu::Target target)
+gb::Word* Cpu::_getTargetPtr16(Cpu::Target target)
 {
     switch (target) {
         case Cpu::RegBC:     return &_registers.BC;
@@ -1613,7 +1613,7 @@ gb::Dword* Cpu::_getTargetPtr16(Cpu::Target target)
     return nullptr;
 }
 
-void Cpu::_load(Cpu::Target target, gb::Word n)
+void Cpu::_load(Cpu::Target target, gb::Byte n)
 {
     switch (target) {
         case Cpu::RegB:     _registers.B = n;  break;
@@ -1631,7 +1631,7 @@ void Cpu::_load(Cpu::Target target, gb::Word n)
     }        
 }
 
-void Cpu::_load(Cpu::Target target, gb::Dword nn)
+void Cpu::_load(Cpu::Target target, gb::Word nn)
 {
     switch (target) {
         case Cpu::RegBC:    _registers.BC = nn; break;
@@ -1646,23 +1646,23 @@ void Cpu::_load(Cpu::Target target, Cpu::Target source)
 {
     Cpu::TargetType sourceType = _getTargetType(source);
     if (sourceType == Cpu::TargetType8) {
-        gb::Word val = _getTargetValue8(source);
+        gb::Byte val = _getTargetValue8(source);
         _load(target, val);
     } else if (sourceType == Cpu::TargetType16) {
-        gb::Dword val = _getTargetValue16(source);
+        gb::Word val = _getTargetValue16(source);
         _load(target, val);
     } else {
         assert(false && "Unhandled target type");
     }
 }
 
-void Cpu::_loadToMem(gb::Dword addr, Cpu::Target source)
+void Cpu::_loadToMem(gb::Word addr, Cpu::Target source)
 {
     Cpu::TargetType sourceType = _getTargetType(source);
     if (sourceType == Cpu::TargetType8) {
         (*_memory)[addr] = _getTargetValue8(source);
     } else if (sourceType == Cpu::TargetType16) {
-        gb::Dword val = _getTargetValue16(source);
+        gb::Word val = _getTargetValue16(source);
         (*_memory)[addr] = val & 0x00FF; 
         (*_memory)[addr + 1] = val & 0xFF00; 
     } else {
@@ -1671,43 +1671,43 @@ void Cpu::_loadToMem(gb::Dword addr, Cpu::Target source)
 
 }
 
-void Cpu::_loadFromMem(Cpu::Target target, gb::Dword addr)
+void Cpu::_loadFromMem(Cpu::Target target, gb::Word addr)
 {
     _load(target, (*_memory)[addr]);
 }
 
-void Cpu::_add8(Cpu::Target target, gb::Word val)
+void Cpu::_add8(Cpu::Target target, gb::Byte val)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
+
+    int fullRes = *data + val;
+    gb::Byte res = static_cast<gb::Byte>(fullRes);
+    _assignFlags(res == 0, 
+                 0, 
+                 ((((*data)&0x0F) + (val&0x0F))&0x10) == 0x10, 
+                 fullRes > std::numeric_limits<gb::Byte>::max());
+    *data = res;
+}
+
+void Cpu::_add16(Cpu::Target target, gb::Word val)
+{
+    gb::Word* data = _getTargetPtr16(target);
 
     int fullRes = *data + val;
     gb::Word res = static_cast<gb::Word>(fullRes);
     _assignFlags(res == 0, 
                  0, 
-                 ((((*data)&0x0F) + (val&0x0F))&0x10) == 0x10, 
+                 ((((*data)&0x0FFF) + (val&0x0FFF))&0x1000) == 0x1000, 
                  fullRes > std::numeric_limits<gb::Word>::max());
     *data = res;
 }
 
-void Cpu::_add16(Cpu::Target target, gb::Dword val)
+void Cpu::_sub8(Cpu::Target target, gb::Byte val)
 {
-    gb::Dword* data = _getTargetPtr16(target);
-
-    int fullRes = *data + val;
-    gb::Dword res = static_cast<gb::Dword>(fullRes);
-    _assignFlags(res == 0, 
-                 0, 
-                 ((((*data)&0x0FFF) + (val&0x0FFF))&0x1000) == 0x1000, 
-                 fullRes > std::numeric_limits<gb::Dword>::max());
-    *data = res;
-}
-
-void Cpu::_sub8(Cpu::Target target, gb::Word val)
-{
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
 
     int fullRes = *data - val;
-    gb::Word res = static_cast<gb::Word>(fullRes);
+    gb::Byte res = static_cast<gb::Byte>(fullRes);
     _assignFlags(res == 0, 
                  1, 
                  (static_cast<int>((*data)&0x0F) - static_cast<int>(val&0x0F)) < 0,
@@ -1715,12 +1715,12 @@ void Cpu::_sub8(Cpu::Target target, gb::Word val)
     *data = res;
 }
 
-void Cpu::_sub16(Cpu::Target target, gb::Dword val)
+void Cpu::_sub16(Cpu::Target target, gb::Word val)
 {
-    gb::Dword* data = _getTargetPtr16(target);
+    gb::Word* data = _getTargetPtr16(target);
 
     int fullRes = *data - val;
-    gb::Dword res = static_cast<gb::Dword>(fullRes);
+    gb::Word res = static_cast<gb::Word>(fullRes);
     _assignFlags(res == 0, 
                  1, 
                  (static_cast<int>((*data)&0x0FFF) - static_cast<int>(val&0x0FFF)) < 0,
@@ -1728,35 +1728,35 @@ void Cpu::_sub16(Cpu::Target target, gb::Dword val)
     *data = res;
 }
 
-void Cpu::_and(Cpu::Target target, gb::Word val)
+void Cpu::_and(Cpu::Target target, gb::Byte val)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     *data &= val;
     _assignFlags(*data == 0, 0, 1, 0); 
 }
 
-void Cpu::_or(Cpu::Target target, gb::Word val)
+void Cpu::_or(Cpu::Target target, gb::Byte val)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     *data |= val;
     _assignFlags(*data == 0, 0, 0, 0); 
 }
 
-void Cpu::_xor(Cpu::Target target, gb::Word val)
+void Cpu::_xor(Cpu::Target target, gb::Byte val)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     *data ^= val;
     _assignFlags(*data == 0, 0, 0, 0); 
 }
 
 void Cpu::_complement(Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     *data = ~(*data);
     _assignFlags(flag(FlagZ), 1, 1, flag(FlagC)); 
 }
 
-void Cpu::_bit(int bit, gb::Word val)
+void Cpu::_bit(int bit, gb::Byte val)
 {
     int zero = 0;
     if ((val & (1 << bit)) == 0x00) {
@@ -1770,91 +1770,91 @@ void Cpu::_bit(int bit, gb::Word val)
 
 void Cpu::_set(int bit, gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     (*data) |= (1 << bit);
 }
 
 void Cpu::_clear(int bit, gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     (*data) &= ~(1 << bit);
 }
 
 void Cpu::_rlc(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) >> 7);
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) >> 7);
     (*data) = ((*data) << 1) | carry;
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_rrc(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) & 0x01);
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) & 0x01);
     (*data) = ((*data) >> 1) | (carry << 7);
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_rl(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) >> 7);
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) >> 7);
     (*data) = ((*data) << 1) | flag(gb::Cpu::FlagC);
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_rr(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) & 0x01);
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) & 0x01);
     (*data) = ((*data) >> 1) | (flag(gb::Cpu::FlagC) << 7);
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_sla(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) & 0x80) >> 7;
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) & 0x80) >> 7;
     (*data) = ((*data) << 1);
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_sra(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) & 0x01);
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) & 0x01);
     (*data) = ((*data) >> 1) | ((*data) & 0x80);
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_srl(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
-    gb::Word carry = ((*data) & 0x01);
+    gb::Byte* data = _getTargetPtr8(target);
+    gb::Byte carry = ((*data) & 0x01);
     (*data) >>= 1;
     _assignFlags((*data) == 0, 0, 0, carry);
 }
 
 void Cpu::_swap(gb::Cpu::Target target)
 {
-    gb::Word* data = _getTargetPtr8(target);
+    gb::Byte* data = _getTargetPtr8(target);
     (*data) = ((*data) << 4) | (((*data) & 0xF0) >> 4);
     _assignFlags((*data) == 0, 0, 0, 0);
 }
 
-void Cpu::_compare(gb::Word a, gb::Word b)
+void Cpu::_compare(gb::Byte a, gb::Byte b)
 {
     // Similar to a subtract but no register values change
     int fullRes = a - b;
-    gb::Word res = static_cast<gb::Word>(fullRes);
+    gb::Byte res = static_cast<gb::Byte>(fullRes);
     _assignFlags(res == 0, 
                  1, 
                  (static_cast<int>(a&0x0F) - static_cast<int>(b&0x0F)) < 0,
                  fullRes < 0);
 }
 
-void Cpu::_call(gb::Dword addr)
+void Cpu::_call(gb::Word addr)
 {
     (*_memory)[--_registers.SP] = (_registers.PC >> 8);
     (*_memory)[--_registers.SP] = (_registers.PC & 0x00FF);
@@ -1863,13 +1863,13 @@ void Cpu::_call(gb::Dword addr)
 
 void Cpu::_return()
 {
-    gb::Word low = (*_memory)[_registers.SP++];
-    gb::Word high = (*_memory)[_registers.SP++];
-    gb::Dword addr = (high << 8) | low;
+    gb::Byte low = (*_memory)[_registers.SP++];
+    gb::Byte high = (*_memory)[_registers.SP++];
+    gb::Word addr = (high << 8) | low;
     _registers.PC = addr;
 }
 
-void Cpu::_assignFlag(Cpu::Flag flag, gb::Word val)
+void Cpu::_assignFlag(Cpu::Flag flag, gb::Byte val)
 {
     val = val & 0x1;
     _registers.F &= ~(1 << flag);

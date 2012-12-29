@@ -21,7 +21,7 @@ public:
     ~MMU();
 
     virtual bool isValidAddress(size_t address) const override;
-    virtual gb::Word& operator[](size_t address) override;
+    virtual gb::Byte& operator[](size_t address) override;
 
     /**
      * Caller retains ownership of target.

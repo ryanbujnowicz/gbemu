@@ -21,7 +21,7 @@ bool MMU::isValidAddress(size_t address) const
     return false;
 }
 
-gb::Word& MMU::operator[](size_t address)
+gb::Byte& MMU::operator[](size_t address)
 {
     for (const MapEntry& e : _entries) {
         if (e.localRange.contains(address)) {

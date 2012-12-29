@@ -5,8 +5,8 @@
 
 namespace gb {
 
-typedef unsigned char Word;
-typedef unsigned short Dword;
+typedef unsigned char Byte;
+typedef unsigned short Word;
 
 size_t bytes(size_t num);
 size_t kb(size_t num);

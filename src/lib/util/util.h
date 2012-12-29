@@ -55,8 +55,8 @@ private:
     size_t _max;
 };
 
+std::string toStr(gb::Byte val);
 std::string toStr(gb::Word val);
-std::string toStr(gb::Dword val);
 
 template <typename T>
 T toHex(const std::string& s)
@@ -72,14 +72,14 @@ T toHex(const std::string& s)
 }
 
 /**
- * Converts i to a 8bit twos-complement representation.
+ * Converts i to a twos-complement representation.
  */
-// TODO: encode
-gb::Word toSigned8(int i);
-gb::Dword toSigned16(int i);
+// TODO: encode/decode
+gb::Byte toSigned8(int i);
+gb::Word toSigned16(int i);
 
-int toInt8(gb::Word val);
-int toInt16(gb::Dword val);
+int toInt8(gb::Byte val);
+int toInt16(gb::Word val);
 
 }
 
