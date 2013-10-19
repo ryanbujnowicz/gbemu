@@ -1,5 +1,5 @@
-#ifndef GB_Cpu_H
-#define GB_Cpu_H
+#ifndef GB_CPU_H
+#define GB_CPU_H
 
 #include <vector>
 
