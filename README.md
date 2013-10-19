@@ -1,4 +1,4 @@
 gbemu
 =====
 
-A small GameBoy emulator built educational purposes.
+A small GameBoy emulator built for educational purposes.
