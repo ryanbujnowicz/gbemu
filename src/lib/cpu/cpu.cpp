@@ -613,7 +613,7 @@ void Cpu::processNextInstruction()
         case 0xE1: // HL
         case 0xF1: // AF
         {
-            gb::Word* data; 
+            gb::Word* data = nullptr; 
             switch (opcode) {
                 case 0xC1: data = &_registers.BC; break;
                 case 0xD1: data = &_registers.DE; break;
@@ -663,7 +663,7 @@ void Cpu::processNextInstruction()
         case 0xE5: // HL
         case 0xF5: // AF
         {
-            gb::Word* data; 
+            gb::Word* data = nullptr; 
             switch (opcode) {
                 case 0xC5: data = &_registers.BC; break;
                 case 0xD5: data = &_registers.DE; break;
