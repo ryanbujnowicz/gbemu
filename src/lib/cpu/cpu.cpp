@@ -1,7 +1,7 @@
 #include "cpu.h"
 using gb::Cpu;
 
-#include "util.h"
+#include "util/util.h"
 
 #include <cassert>
 

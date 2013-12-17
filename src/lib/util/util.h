@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cstdlib>
+#include <limits>
 #include <ostream>
 #include <sstream>
 
