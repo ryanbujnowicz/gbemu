@@ -1,8 +1,13 @@
 import os
 Import('env')
 
+if env['PLATFORM'] == 'posix':
+    boostLib = 'boost_program_options'
+else:
+    boostLib = 'boost_program_options-mt'
+
 prog = env.Program('zas', Glob("*.cpp"), 
-                   LIBS=['cpu', 'util', 'boost_program_options-mt'], 
+                   LIBS=['cpu', 'util', boostLib], 
                    LIBPATH=['#inst/lib'], 
                    CPPPATH=["#inst/include"])
 
