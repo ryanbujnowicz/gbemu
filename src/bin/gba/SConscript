@@ -6,7 +6,7 @@ if env['PLATFORM'] == 'posix':
 else:
     boostLib = 'boost_program_options-mt'
 
-prog = env.Program('zas', Glob("*.cpp"), 
+prog = env.Program('gba', Glob("*.cpp"), 
                    LIBS=['cpu', 'util', boostLib], 
                    LIBPATH=['#inst/lib'], 
                    CPPPATH=["#inst/include"])
