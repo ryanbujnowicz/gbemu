@@ -29,7 +29,7 @@ void Cpu::processNextInstruction()
         case 0x00:
             break;
 
-            // LD rr,nn
+        // LD rr,nn
         case 0x01: // BC
         case 0x11: // DE
         case 0x21: // HL
@@ -39,7 +39,7 @@ void Cpu::processNextInstruction()
                 break;
             }
 
-            // LD (rr),A
+        // LD (rr),A
         case 0x02: // BC
         case 0x12: // DE
             {
@@ -47,7 +47,7 @@ void Cpu::processNextInstruction()
                 break;
             }
 
-            // INC rr
+        // INC rr
         case 0x03: // BC
         case 0x13: // DE
         case 0x23: // HL
@@ -59,7 +59,7 @@ void Cpu::processNextInstruction()
                 break;
             }
 
-            // INC r
+        // INC r
         case 0x04: // B
         case 0x0C: // C
         case 0x14: // D
